@@ -12,18 +12,13 @@ import 'package:flutter/material.dart';
 dynamic x = 0;
 
 void main() async {
-  Socket sock = await Socket.connect('172.28.146.254', 80);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp(sock));
+  runApp(MyApp());
 }
 
 //-------------------------------------------------------------------
 class MyApp extends StatelessWidget {
-  Socket socket;
-  MyApp(Socket s) {
-    this.socket = s;
-  }
   @override
   Widget build(BuildContext context) {
     final title = 'Manual Car';
@@ -34,7 +29,6 @@ class MyApp extends StatelessWidget {
       ),
       home: Home(
         title: title,
-        channel: socket,
       ),
     );
   }
@@ -43,10 +37,8 @@ class MyApp extends StatelessWidget {
 //******************************************************* */
 class Home extends StatefulWidget {
   final String title;
-  final Socket channel;
 
-  Home({Key key, @required this.title, @required this.channel})
-      : super(key: key);
+  Home({Key key, @required this.title}) : super(key: key);
   @override
   _HomeState createState() => _HomeState();
 }
@@ -147,33 +139,24 @@ class _HomeState extends State<Home> {
   }
 
   @override
-  void dispose() {
-    widget.channel.close();
-    super.dispose();
-  }
-
   void _forward() {
-    widget.channel.write("F");
+    print("manual");
   }
 
   void _backward() {
-    widget.channel.write("B");
+    print("manual");
   }
 
   void _right() {
-    widget.channel.write("R");
+    print("manual");
   }
 
   void _left() {
-    widget.channel.write("L");
+    print("manual");
   }
 
   void _stop() {
-    widget.channel.write("S");
-  }
-
-  void _reload() async {
-    Socket sock = await Socket.connect('172.28.134.149', 80);
+    print("manual");
   }
 }
 
